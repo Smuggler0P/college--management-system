@@ -1,0 +1,8 @@
+<?php
+
+$hostname = "localhost";
+$username = "root";
+$pass  = "password";
+$db_name = "cms_db";
+
+?>

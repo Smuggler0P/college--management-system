@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  app:
+    image: ubuntu:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      DEBIAN_FRONTEND: noninteractive
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: cms_db
+    working_dir: /var/www/html
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y php default-mysql-client php-mysql php libapache2-mod-php &&
+        apache2ctl -D FOREGROUND
+      "
+  db:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: cms_db
+    volumes:
+      - .:/docker-entrypoint-initdb.d
